@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class CourseReq {
+public class Course {
 
     @NotBlank
     private String student_id;
