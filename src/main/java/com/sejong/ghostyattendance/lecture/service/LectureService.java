@@ -13,6 +13,10 @@ import tech.tablesaw.io.html.HtmlReadOptions;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +70,8 @@ public class LectureService {
             String startDate = parsingLectureName.get(0);
             String endDate = parsingLectureName.get(1);
             String onlyLectureName = parsingLectureName.get(2);
+            String currentDate = getCurrentDate();
+            int status = parseLectureStatus(startDate, endDate, currentDate, row.getString("is_pass"));
 
             lectureRes = new LectureRes();
             lectureRes.setLocation(row.getString("location"));
@@ -78,6 +84,7 @@ public class LectureService {
             } else {
                 lectureRes.setIs_pass("F");
             }
+            lectureRes.setStatus(status);
 
             lectures.add(lectureRes);
         }
@@ -97,4 +104,28 @@ public class LectureService {
         return List.of(startDate, endDate, onlyLectureName);
     }
 
+    private int parseLectureStatus(String startDate, String endDate, String currentDate, String isPass) {
+        /* 상태 1 : 아직 기간 안됨
+        상태 2 : 들음
+        상태 3 : 지금 수강기간, 안들음
+        상태 4 : 수강기간 지남, 안들음 */
+
+        if (Long.parseLong(currentDate) < Long.parseLong(startDate)) {
+            return 1;
+        } else if (isPass.equals("P")) {
+            return 2;
+        } else if (Long.parseLong(currentDate) <= Long.parseLong(endDate) && isPass.equals("F")) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    private String getCurrentDate() {
+        LocalDate curDate = LocalDate.now();
+        LocalTime curTime = LocalTime.now();
+        LocalDateTime dateTime = LocalDateTime.of(curDate, curTime);
+
+        return dateTime.format(DateTimeFormatter.ofPattern("yyMMddhhmm"));
+    }
 }
