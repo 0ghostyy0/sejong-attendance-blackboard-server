@@ -1,9 +1,6 @@
 package com.sejong.ghostyattendance.lecture.service;
 
-import com.sejong.ghostyattendance.lecture.dto.Course;
-import com.sejong.ghostyattendance.lecture.dto.CoursesReq;
-import com.sejong.ghostyattendance.lecture.dto.LectureRes;
-import com.sejong.ghostyattendance.lecture.dto.LecturesOfCoursesRes;
+import com.sejong.ghostyattendance.lecture.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import tech.tablesaw.api.ColumnType;
@@ -34,12 +31,26 @@ public class LectureService {
 
     public List<LecturesOfCoursesRes> getLectures(CoursesReq courses) {
 
-        LecturesOfCoursesRes lecturesOfCourses = new LecturesOfCoursesRes();
+        LecturesOfCoursesRes lecturesOfCourses;
         List<LecturesOfCoursesRes> allLecturesOfCourses = new ArrayList<>();
+        List<LectureRes> lectures;
+        List<Integer> statusCounter;
+        UnpassCountRes unpassCountRes;
 
         try {
             for (Course course : courses.getCourses()) {
-                lecturesOfCourses.setLectures(parseLectures(course));
+                lecturesOfCourses = new LecturesOfCoursesRes();
+                lectures = parseLectures(course);
+                statusCounter = checkStatusCounter(lectures);
+                unpassCountRes = new UnpassCountRes();
+                unpassCountRes.setThis_week(statusCounter.get(0));
+                unpassCountRes.setAll(statusCounter.get(1));
+
+                lecturesOfCourses.setLectures(lectures);
+                lecturesOfCourses.setCourse_name(course.getCourse_name());
+                lecturesOfCourses.setCourse_id(course.getCourse_id());
+                lecturesOfCourses.setClass_id(course.getClass_id());
+                lecturesOfCourses.setUnpass_count(unpassCountRes);
 
                 allLecturesOfCourses.add(lecturesOfCourses);
             }
@@ -65,7 +76,6 @@ public class LectureService {
         //System.out.println(table);
 
         for (Row row : table) {
-            System.out.println(row);
             List<String> parsingLectureName = parseLectureName(row.getString("lecture_name"));
             String startDate = parsingLectureName.get(0);
             String endDate = parsingLectureName.get(1);
@@ -127,5 +137,24 @@ public class LectureService {
         LocalDateTime dateTime = LocalDateTime.of(curDate, curTime);
 
         return dateTime.format(DateTimeFormatter.ofPattern("yyMMddhhmm"));
+    }
+
+    private List<Integer> checkStatusCounter(List<LectureRes> lectures) {
+        Integer thisWeekUnpassCount = 0;
+        Integer allUnpassCount = 0;
+
+        if (lectures.size() != 0) {
+            for (LectureRes lecture: lectures) {
+                if (lecture.getStatus() == 3) {
+                    thisWeekUnpassCount++;
+                    allUnpassCount++;
+                }
+                if (lecture.getStatus() == 4) {
+                    allUnpassCount++;
+                }
+            }
+        }
+
+        return List.of(thisWeekUnpassCount, allUnpassCount);
     }
 }
