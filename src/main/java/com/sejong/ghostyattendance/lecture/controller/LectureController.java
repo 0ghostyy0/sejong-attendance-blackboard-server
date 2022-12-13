@@ -1,6 +1,6 @@
 package com.sejong.ghostyattendance.lecture.controller;
 
-import com.sejong.ghostyattendance.lecture.dto.CourseReq;
+import com.sejong.ghostyattendance.lecture.dto.CoursesReq;
 import com.sejong.ghostyattendance.lecture.dto.LecturesOfCoursesRes;
 import com.sejong.ghostyattendance.lecture.service.LectureService;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class LectureController {
 
     @PostMapping("")
     @ResponseBody
-    public ResponseEntity<List<LecturesOfCoursesRes>> getLectures(@RequestBody List<CourseReq> courses) {
+    public ResponseEntity<List<LecturesOfCoursesRes>> getLectures(@RequestBody CoursesReq courses) {
         List<LecturesOfCoursesRes> lecturesOfCourses = lectureService.getLectures(courses);
 
         return ResponseEntity.ok(lecturesOfCourses);
