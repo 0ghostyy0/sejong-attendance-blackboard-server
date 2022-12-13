@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class unpassCountRes {
+public class UnpassCountRes {
 
     private int this_week;
     private int all;
