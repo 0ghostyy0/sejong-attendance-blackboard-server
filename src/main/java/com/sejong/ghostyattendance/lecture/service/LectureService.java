@@ -1,5 +1,6 @@
 package com.sejong.ghostyattendance.lecture.service;
 
+import com.sejong.ghostyattendance.exception.ParsingException;
 import com.sejong.ghostyattendance.lecture.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class LectureService {
                 allLecturesOfCourses.add(lecturesOfCourses);
             }
         } catch (IOException exception) {
-            System.out.println(exception.getMessage());
+            throw new ParsingException("과목 정보를 가져오는데 실패했습니다.");
         }
 
         return allLecturesOfCourses;
