@@ -73,9 +73,6 @@ public class LectureService {
         List<LectureRes> lectures = new ArrayList<>();
         LectureRes lectureRes;
 
-        //System.out.println(table.structure());
-        //System.out.println(table);
-
         for (Row row : table) {
             List<String> parsingLectureName = parseLectureName(row.getString("lecture_name"));
             String startDate = parsingLectureName.get(0);
