@@ -51,3 +51,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### applicaton.yml
+/src/main/resources/application-local.yml
