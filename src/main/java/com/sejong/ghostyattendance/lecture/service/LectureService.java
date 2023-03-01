@@ -25,13 +25,14 @@ import static tech.tablesaw.api.ColumnType.STRING;
 public class LectureService {
 
     private final String blackboardUrl;
+    private final String semester;
 
-    public LectureService(@Value("${blackboard_url}") String blackboardUrl) {
+    public LectureService(@Value("${blackboard_url}") String blackboardUrl, @Value("${semester}") String semester) {
         this.blackboardUrl = blackboardUrl;
+        this.semester = semester;
     }
 
     public List<LecturesOfCoursesRes> getLectures(CoursesReq courses) {
-
         LecturesOfCoursesRes lecturesOfCourses;
         List<LecturesOfCoursesRes> allLecturesOfCourses = new ArrayList<>();
         List<LectureRes> lectures;
@@ -64,12 +65,14 @@ public class LectureService {
 
     private List<LectureRes> parseLectures(Course course) throws IOException {
         ColumnType[] types = {STRING, STRING, STRING, STRING, STRING, STRING, INTEGER, STRING};
-        String semester = "20222020";
-        String location = String.format(blackboardUrl, course.getStudent_id(), semester, course.getDept_id(),
+        String currentYear = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy"));
+        String location = String.format(blackboardUrl, course.getStudent_id(), currentYear, semester, course.getDept_id(),
                 course.getCourse_id(), course.getClass_id(), course.getStudent_id());
+
         Table table = Table.read().usingOptions(HtmlReadOptions.builder(new URL(location))
                 .tableName("lectures")
                 .columnTypes(types));
+
         List<LectureRes> lectures = new ArrayList<>();
         LectureRes lectureRes;
 
