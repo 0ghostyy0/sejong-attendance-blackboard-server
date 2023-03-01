@@ -87,8 +87,8 @@ public class LectureService {
             lectureRes = new LectureRes();
             lectureRes.setLocation(row.getString("location"));
             lectureRes.setLecture_name(onlyLectureName);
-            lectureRes.setStart_date(startDate);
-            lectureRes.setEnd_date(endDate);
+            lectureRes.setStart_date(startDate.substring(2));
+            lectureRes.setEnd_date(endDate.substring(2));
             lectureRes.setProgress(row.getInt("progress"));
             if (row.getString("is_pass").equals("P")) {
                 lectureRes.setIs_pass("P");
