@@ -11,7 +11,7 @@ public class LectureRes {
     private String lecture_name;
     private String start_date;
     private String end_date;
-    private int progress;
+    private Long progress;
     private String is_pass;
     private int status;
 }

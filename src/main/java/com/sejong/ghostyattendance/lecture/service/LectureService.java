@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static tech.tablesaw.api.ColumnType.DOUBLE;
 import static tech.tablesaw.api.ColumnType.INTEGER;
 import static tech.tablesaw.api.ColumnType.STRING;
 
@@ -64,7 +65,7 @@ public class LectureService {
     }
 
     private List<LectureRes> parseLectures(Course course) throws IOException {
-        ColumnType[] types = {STRING, STRING, STRING, STRING, STRING, STRING, INTEGER, STRING};
+        ColumnType[] types = {STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING};
         String currentYear = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy"));
         String location = String.format(blackboardUrl, course.getStudent_id(), currentYear, semester, course.getDept_id(),
                 course.getCourse_id(), course.getClass_id(), course.getStudent_id());
@@ -89,7 +90,7 @@ public class LectureService {
             lectureRes.setLecture_name(onlyLectureName);
             lectureRes.setStart_date(startDate.substring(2));
             lectureRes.setEnd_date(endDate.substring(2));
-            lectureRes.setProgress(row.getInt("progress"));
+            lectureRes.setProgress(Math.round(Double.parseDouble(row.getString("progress"))));
             if (row.getString("is_pass").equals("P")) {
                 lectureRes.setIs_pass("P");
             } else {
