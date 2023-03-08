@@ -1,14 +1,13 @@
 package com.sejong.ghostyattendance.lecture.service;
 
-import com.sejong.ghostyattendance.exception.ParsingException;
-import com.sejong.ghostyattendance.lecture.dto.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import tech.tablesaw.api.ColumnType;
-import tech.tablesaw.api.Row;
-import tech.tablesaw.api.Table;
-import tech.tablesaw.io.html.HtmlReadOptions;
+import static tech.tablesaw.api.ColumnType.STRING;
 
+import com.sejong.ghostyattendance.exception.ParsingException;
+import com.sejong.ghostyattendance.lecture.dto.Course;
+import com.sejong.ghostyattendance.lecture.dto.CoursesReq;
+import com.sejong.ghostyattendance.lecture.dto.LectureRes;
+import com.sejong.ghostyattendance.lecture.dto.LecturesOfCoursesRes;
+import com.sejong.ghostyattendance.lecture.dto.UnpassCountRes;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -17,10 +16,12 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import static tech.tablesaw.api.ColumnType.DOUBLE;
-import static tech.tablesaw.api.ColumnType.INTEGER;
-import static tech.tablesaw.api.ColumnType.STRING;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import tech.tablesaw.api.ColumnType;
+import tech.tablesaw.api.Row;
+import tech.tablesaw.api.Table;
+import tech.tablesaw.io.html.HtmlReadOptions;
 
 @Service
 public class LectureService {
@@ -111,9 +112,18 @@ public class LectureService {
                 + fullDate.substring(11, 13) + fullDate.substring(14, 16);
         String endDate = fullDate.substring(21, 23) + fullDate.substring(24, 26) + fullDate.substring(27, 29)
                 + fullDate.substring(30, 32) + fullDate.substring(33, 35);
-        String onlyLectureName = lectureName.substring(6, length - 38);
+        String onlyLectureName = parserLectureName(lectureName, length);
 
         return List.of(startDate, endDate, onlyLectureName);
+    }
+
+    private static String parserLectureName(String lectureName, int length) {
+        if (length - 38 < 6 || !lectureName.contains("XIN")) {
+            return lectureName.substring(0, length - 38);
+        }
+        else {
+            return lectureName.substring(6, length - 38);
+        }
     }
 
     private int parseLectureStatus(String startDate, String endDate, String currentDate, String isPass) {
