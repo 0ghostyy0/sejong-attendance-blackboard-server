@@ -106,17 +106,25 @@ public class LectureService {
     }
 
     private List<String> parseLectureName(String lectureName) {
+        String startDate = null;
+        String endDate = null;
+        String onlyLectureName = null;
         int length = lectureName.length();
-        String fullDate = lectureName.substring(length - 35, length);
-        String startDate = fullDate.substring(2, 4) + fullDate.substring(5, 7) + fullDate.substring(8, 10)
-                + fullDate.substring(11, 13) + fullDate.substring(14, 16);
-        String endDate = fullDate.substring(21, 23) + fullDate.substring(24, 26) + fullDate.substring(27, 29)
-                + fullDate.substring(30, 32) + fullDate.substring(33, 35);
-        String onlyLectureName = parserLectureName(lectureName, length);
+        try {
+            String fullDate = lectureName.substring(length - 35, length);
+            startDate = fullDate.substring(2, 4) + fullDate.substring(5, 7) + fullDate.substring(8, 10)
+                    + fullDate.substring(11, 13) + fullDate.substring(14, 16);
+            endDate = fullDate.substring(21, 23) + fullDate.substring(24, 26) + fullDate.substring(27, 29)
+                    + fullDate.substring(30, 32) + fullDate.substring(33, 35);
+            onlyLectureName = parserLectureName(lectureName, length);
+        } catch (Exception e) {
+            System.out.println(lectureName);
+            System.out.println(e.getMessage());
+
+        }
 
         return List.of(startDate, endDate, onlyLectureName);
     }
-
     private static String parserLectureName(String lectureName, int length) {
         if (length - 38 < 6 || !lectureName.contains("XIN")) {
             return lectureName.substring(0, length - 38);
