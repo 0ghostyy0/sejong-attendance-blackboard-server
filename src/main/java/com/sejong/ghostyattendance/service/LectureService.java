@@ -30,11 +30,11 @@ public class LectureService {
         this.semester = semester;
     }
 
-    public List<LecturesOfCoursesResponse> getLectures(CoursesRequest courses) {
+    public List<LecturesOfCoursesResponse> getLectures(CoursesRequest request) {
         try {
             List<LecturesOfCoursesResponse> allLecturesOfCourses = new ArrayList<>();
-            for (CourseRequest request : courses.getCourses()) {
-                Course course = toDomain(request);
+            for (CourseRequest courseRequest : request.getCourses()) {
+                Course course = toDomain(courseRequest);
                 List<Lecture> lectures = LectureParser.parse(course, blackboardUrl, semester);
                 UnPassCount unpassCount = LectureUnPassCounter.count(lectures);
 
