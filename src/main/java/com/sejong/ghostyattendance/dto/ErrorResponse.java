@@ -1,4 +1,4 @@
-package com.sejong.ghostyattendance.exception;
+package com.sejong.ghostyattendance.dto;
 
 import lombok.Getter;
 

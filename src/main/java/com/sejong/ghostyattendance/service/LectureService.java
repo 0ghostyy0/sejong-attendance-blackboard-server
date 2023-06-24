@@ -1,13 +1,13 @@
-package com.sejong.ghostyattendance.lecture.service;
+package com.sejong.ghostyattendance.service;
 
 import static tech.tablesaw.api.ColumnType.STRING;
 
 import com.sejong.ghostyattendance.exception.ParsingException;
-import com.sejong.ghostyattendance.lecture.dto.Course;
-import com.sejong.ghostyattendance.lecture.dto.CoursesReq;
-import com.sejong.ghostyattendance.lecture.dto.LectureRes;
-import com.sejong.ghostyattendance.lecture.dto.LecturesOfCoursesRes;
-import com.sejong.ghostyattendance.lecture.dto.UnpassCountRes;
+import com.sejong.ghostyattendance.domain.Course;
+import com.sejong.ghostyattendance.dto.CoursesReq;
+import com.sejong.ghostyattendance.dto.LectureRes;
+import com.sejong.ghostyattendance.dto.LecturesOfCoursesRes;
+import com.sejong.ghostyattendance.dto.UnpassCountRes;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;

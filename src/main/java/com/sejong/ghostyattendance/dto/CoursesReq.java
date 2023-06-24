@@ -1,5 +1,6 @@
-package com.sejong.ghostyattendance.lecture.dto;
+package com.sejong.ghostyattendance.dto;
 
+import com.sejong.ghostyattendance.domain.Course;
 import lombok.Getter;
 import lombok.Setter;
 

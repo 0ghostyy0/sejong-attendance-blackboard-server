@@ -1,8 +1,8 @@
-package com.sejong.ghostyattendance.lecture.controller;
+package com.sejong.ghostyattendance.controller;
 
-import com.sejong.ghostyattendance.lecture.dto.CoursesReq;
-import com.sejong.ghostyattendance.lecture.dto.LecturesOfCoursesRes;
-import com.sejong.ghostyattendance.lecture.service.LectureService;
+import com.sejong.ghostyattendance.dto.CoursesReq;
+import com.sejong.ghostyattendance.dto.LecturesOfCoursesRes;
+import com.sejong.ghostyattendance.service.LectureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.sejong.ghostyattendance.lecture.dto;
+package com.sejong.ghostyattendance.dto;
 
 import lombok.Getter;
 import lombok.Setter;
