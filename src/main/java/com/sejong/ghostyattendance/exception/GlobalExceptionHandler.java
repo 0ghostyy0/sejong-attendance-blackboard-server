@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ControllerAdvice {
+public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ParsingException.class)
-    public ResponseEntity<ErrorResponse> handleParsingException(ParsingException e) {
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handle(ParsingException e) {
         return ResponseEntity.internalServerError().body(new ErrorResponse(e.getMessage()));
     }
 }
