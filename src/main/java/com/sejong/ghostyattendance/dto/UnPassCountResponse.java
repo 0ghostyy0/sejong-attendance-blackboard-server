@@ -1,11 +1,11 @@
 package com.sejong.ghostyattendance.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public class UnpassCountRes {
+@AllArgsConstructor
+public class UnPassCountResponse {
 
     private int this_week;
     private int all;

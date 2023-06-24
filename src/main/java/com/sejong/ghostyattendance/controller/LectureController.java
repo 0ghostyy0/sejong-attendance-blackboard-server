@@ -1,15 +1,15 @@
 package com.sejong.ghostyattendance.controller;
 
-import com.sejong.ghostyattendance.dto.CoursesReq;
-import com.sejong.ghostyattendance.dto.LecturesOfCoursesRes;
+import com.sejong.ghostyattendance.dto.CoursesRequest;
+import com.sejong.ghostyattendance.dto.LecturesOfCoursesResponse;
 import com.sejong.ghostyattendance.service.LectureService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping("/lectures")
 public class LectureController {
@@ -20,13 +20,9 @@ public class LectureController {
         this.lectureService = lectureService;
     }
 
-    @PostMapping("")
-    @ResponseBody
-    public ResponseEntity<List<LecturesOfCoursesRes>> getLectures(@RequestBody CoursesReq courses) {
-        log.info(log.getName());
-        List<LecturesOfCoursesRes> lecturesOfCourses = lectureService.getLectures(courses);
-
+    @PostMapping
+    public ResponseEntity<List<LecturesOfCoursesResponse>> getLectures(@RequestBody CoursesRequest request) {
+        List<LecturesOfCoursesResponse> lecturesOfCourses = lectureService.getLectures(request);
         return ResponseEntity.ok(lecturesOfCourses);
     }
-
 }
