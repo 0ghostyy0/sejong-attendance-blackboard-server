@@ -1,26 +1,15 @@
 package com.sejong.ghostyattendance.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
-
-import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
+@AllArgsConstructor
 public class Course {
 
-    @NotBlank
-    private String student_id;
-
-    @NotBlank
-    private String dept_id;
-
-    @NotBlank
-    private String course_name;
-
-    @NotBlank
-    private String course_id;
-
-    @NotBlank
-    private String class_id;
+    private final String studentId;
+    private final String deptId;
+    private final String courseName;
+    private final String courseId;
+    private final String classId;
 }
