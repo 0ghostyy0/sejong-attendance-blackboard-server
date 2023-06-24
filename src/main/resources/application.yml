@@ -3,3 +3,10 @@ spring:
     default: local
 
 blackboard_url: ${BLACKBOARD_URL}
+semester: ${SEMESTER}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
